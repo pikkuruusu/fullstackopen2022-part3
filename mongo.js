@@ -10,10 +10,6 @@ if (process.argv.length === 4) {
     process.exit(1)
 }
 
-
-
-
-
 const password = process.argv[2]
 const name = process.argv[3]
 const number = process.argv[4]
@@ -32,11 +28,13 @@ const personSchema = new mongoose.Schema({
 const Person = mongoose.model('Person', personSchema)
 
 if (process.argv.length === 3) {
-    Person.find({})
+    Person
+        .find({})
         .then((result) => {
+            console.log('phonebook:')
             result.forEach((person) => 
                 console.log(`${person.name} ${person.number}`))
-            mongoose.connection.close
+            mongoose.connection.close()
         })
         .catch((err) => console.log(err))
 } else {
@@ -46,11 +44,9 @@ if (process.argv.length === 3) {
     })
 
     person.save()
-        .then((result) => {
+        .then(() => {
             console.log('person saved')
             mongoose.connection.close()
         })
         .catch((err) => console.log(err))
 }
-
-
