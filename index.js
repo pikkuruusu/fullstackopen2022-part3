@@ -100,6 +100,8 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).send({ error: 'malformatted id'})
     } else if (error.name === 'ValidationError') {
         return response.status(400).send({ error: error.message})
+    } else if (error.code && error.code == 11000) {
+        return response.status(409).send({error: 'Name already in database.'})
     }
 
     next(error)
